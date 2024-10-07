@@ -51,15 +51,3 @@
     </script>
 </body>
 </html>
-async function loadChannels() {
-    try {
-        const response = await fetch('channels.json');
-        const channels = await response.json();
-        console.log(channels); // Check if data is being loaded
-    } catch (error) {
-        console.error('Error loading channel data:', error);
-    }
-}
-
-window.onload = loadChannels;
-
