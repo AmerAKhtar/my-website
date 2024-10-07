@@ -1,0 +1,26 @@
+import json
+import requests
+from bs4 import BeautifulSoup
+
+def fetch_channel_data():
+    url = "https://www.lyngsat.com/Paksat-1R.html"  # Use a real URL
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    channels = []
+    for row in soup.find_all('tr', class_='normal'):
+        cells = row.find_all('td')
+        if len(cells) > 3:
+            channel_name = cells[0].text.strip()
+            frequency = cells[1].text.strip()
+            symbol_rate = cells[2].text.strip()
+            channels.append({
+                'name': channel_name,
+                'frequency': frequency,
+                'symbol_rate': symbol_rate
+            })
+
+    with open("channels.json", "w") as json_file:
+        json.dump(channels, json_file, indent=4)
+
+fetch_channel_data()
